@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>City Temperatures</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>City Temperature Dashboard</h1>
+      <p>Initial frontend framework for future interactive temperature visualizations.</p>
+      <p>
+        Public URL:
+        <a href="https://maxnutz.github.io/sff_city_temperatures/">https://maxnutz.github.io/sff_city_temperatures/</a>
+      </p>
+    </header>
+
+    <main class="grid-layout">
+      <section class="panel" id="four-timeseries-panel">
+        <h2>Four Temperature Time Series</h2>
+        <div class="plot-grid">
+          <iframe title="North temperatures" src="./plots/north.html" loading="lazy"></iframe>
+          <iframe title="South temperatures" src="./plots/south.html" loading="lazy"></iframe>
+          <iframe title="East temperatures" src="./plots/east.html" loading="lazy"></iframe>
+          <iframe title="West temperatures" src="./plots/west.html" loading="lazy"></iframe>
+        </div>
+      </section>
+
+      <section class="panel" id="combined-timeseries-panel">
+        <h2>Combined Temperature Time Series</h2>
+        <iframe title="Combined temperatures" src="./plots/combined.html" loading="lazy"></iframe>
+      </section>
+
+      <section class="panel" id="home-panel">
+        <h2>Home / Static Information</h2>
+        <p>
+          This GitHub Pages view keeps the current dashboard structure and embeds Plotly charts generated as standalone HTML files.
+        </p>
+      </section>
+
+      <section class="panel" id="map-panel">
+        <h2>Map with Scatter Plot</h2>
+        <iframe title="Sensor map" src="./plots/map.html" loading="lazy"></iframe>
+      </section>
+    </main>
+  </body>
+</html>
