@@ -30,6 +30,10 @@ header a {
   padding: 1rem;
 }
 
+.page-layout {
+  padding: 1rem;
+}
+
 .panel {
   min-height: 220px;
   padding: 1rem;
@@ -40,6 +44,15 @@ header a {
 
 .panel h2 {
   margin-top: 0;
+}
+
+.site-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.site-list li {
+  margin: 0.5rem 0;
 }
 
 .plot-grid {
