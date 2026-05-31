@@ -1,2 +1,6 @@
+# Prefer creating the `webpage` Conda environment using `environment.yml` (recommended):
+#   conda env create -f environment.yml
+#   conda activate webpage
+# For pip-only setups, the packages below are compatible:
 Flask>=3.0,<4.0
 plotly>=5.0,<6.0

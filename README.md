@@ -14,10 +14,27 @@ The public GitHub Pages site is available at:
 
 The pages build generates interactive Plotly charts as standalone HTML files inside `docs/plots/`.
 
-## Generate Plotly assets locally
+## Setup (Conda — recommended)
+
+Create and activate the `webpage` Conda environment (recommended):
+
+```bash
+conda env create -f environment.yml
+conda activate webpage
+```
+
+If you prefer a pip-only setup, you can still use:
 
 ```bash
 python -m pip install -r requirements.txt
+```
+
+## Generate Plotly assets locally
+
+Activate the environment and run the generator:
+
+```bash
+conda activate webpage
 python scripts/generate_plotly_assets.py
 ```
 
@@ -25,8 +42,10 @@ Then open `/tmp/workspace/maxnutz/sff_city_temperatures/docs/index.html` in a br
 
 ## Run Flask scaffold locally
 
+Activate the environment and start the app:
+
 ```bash
-python -m pip install -r requirements.txt
+conda activate webpage
 python app.py
 ```
 

@@ -1,0 +1,9 @@
+name: webpage
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - Flask>=3.0,<4.0
+    - plotly>=5.0,<6.0
