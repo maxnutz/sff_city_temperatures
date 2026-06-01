@@ -14,18 +14,45 @@
         Public URL:
         <a href="https://maxnutz.github.io/sff_city_temperatures/">https://maxnutz.github.io/sff_city_temperatures/</a>
       </p>
+      <nav class="site-nav" aria-label="Site navigation">
+        <a href="./index.html">Home</a>
+        <a href="./four-timeseries.html">Four Temperature Time Series</a>
+        <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
+        <a href="./static-information.html">Static Information</a>
+        <a href="./map-scatter.html">Map with Scatter Plot</a>
+      </nav>
     </header>
 
     <main class="page-layout">
       <section class="panel" id="home-panel">
         <h2>Home / Static Information</h2>
         <p>Open one dedicated site per dashboard element:</p>
-        <ul class="site-list">
-          <li><a href="./four-timeseries.html">Four Temperature Time Series</a></li>
-          <li><a href="./combined-timeseries.html">Combined Temperature Time Series</a></li>
-          <li><a href="./static-information.html">Home / Static Information</a></li>
-          <li><a href="./map-scatter.html">Map with Scatter Plot</a></li>
-        </ul>
+        <div class="grid-layout">
+          <a class="site-card-link" href="./four-timeseries.html">
+            <section class="panel">
+              <h2>Four Temperature Time Series</h2>
+              <p>Placeholder area for showing one site with four temperature time series.</p>
+            </section>
+          </a>
+          <a class="site-card-link" href="./combined-timeseries.html">
+            <section class="panel">
+              <h2>Combined Temperature Time Series</h2>
+              <p>Placeholder area for one graph containing all four time series.</p>
+            </section>
+          </a>
+          <a class="site-card-link" href="./static-information.html">
+            <section class="panel">
+              <h2>Home / Static Information</h2>
+              <p>Placeholder area for static project information.</p>
+            </section>
+          </a>
+          <a class="site-card-link" href="./map-scatter.html">
+            <section class="panel">
+              <h2>Map with Scatter Plot</h2>
+              <p>Placeholder area for an interactive map with scattered points.</p>
+            </section>
+          </a>
+        </div>
       </section>
     </main>
   </body>
