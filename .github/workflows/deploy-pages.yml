@@ -29,9 +29,6 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Generate Plotly assets
-        run: python scripts/generate_plotly_assets.py
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
