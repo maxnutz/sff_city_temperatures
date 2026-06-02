@@ -13,6 +13,12 @@ The public GitHub Pages site is available at:
 - https://maxnutz.github.io/sff_city_temperatures/
 
 The pages build generates interactive Plotly charts as standalone HTML files inside `docs/plots/`.
+The home page links to one static page per dashboard element:
+
+- `docs/four-timeseries.html`
+- `docs/combined-timeseries.html`
+- `docs/static-information.html`
+- `docs/map-scatter.html`
 
 ## Setup (Conda — recommended)
 
