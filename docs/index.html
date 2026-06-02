@@ -23,7 +23,22 @@
       </nav>
     </header>
 
-    <main class="page-layout">
+    <main class="grid-layout">
+      <section class="panel" id="four-timeseries-panel">
+        <h2>Four Temperature Time Series</h2>
+        <div class="plot-grid">
+          <iframe title="Baum temperatures" src="./plots/baum_time_series.html" loading="lazy"></iframe>
+          <iframe title="Cafe temperatures" src="./plots/cafe_time_series.html" loading="lazy"></iframe>
+          <iframe title="Telefonzelle temperatures" src="./plots/telefonzelle_time_series.html" loading="lazy"></iframe>
+          <iframe title="Bankomat temperatures" src="./plots/bankomat_time_series.html" loading="lazy"></iframe>
+        </div>
+      </section>
+
+      <section class="panel" id="combined-timeseries-panel">
+        <h2>Combined Temperature Time Series</h2>
+        <iframe title="Combined temperatures" src="./plots/combined.html" loading="lazy"></iframe>
+      </section>
+
       <section class="panel" id="home-panel">
         <h2>Home / Static Information</h2>
         <p>Open one dedicated site per dashboard element:</p>
