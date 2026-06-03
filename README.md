@@ -37,35 +37,18 @@ python -m pip install -r requirements.txt
 
 ## Backend scaffold
 
-The Python backend scaffold is in `backend/temperature_backend.py` and includes:
+folder `backend` holds the python code for data evaluation
 
-- weather-station time series plotting
-- single-sensor time series plotting
-- multi-sensor selected-day time series plotting
-- sensor max-temperature map plotting on OpenStreetMap
-- dummy heat-stress evaluation (daily weather-station maxima)
+### Code Structure:
+- main Class `Sensor`: 
+  - init: Sensors are differentiated by their name. All names are in the dict `SENSOR_LOCATIONS`
+  - :param: df: holds the 5-minute data series of the sensor
+  - :param: df_max: holds the maximum temperature per day of the sensor
+  - :method: plot_time_series: Plots one line per day from 00h to 24h of self.df-Timeseries of this sensor. &rarr; output in `docs/plots/{bankomat,baum,cafe,telefonzelle}_time_series.html` to be integrated on the "Four Temperature Time Series" - site
+- function `plot_sensor_max_temperature_map`: _does not work yet_ &rarr; output will be `docs/plots/map.html`
+- function `plot_one_day_for_all_locations`: Creates a figure over one day including the daily lines for all locations &rarr; output is `docs/plots/combined.html`
 
-Dummy CSV input data is committed under `data/dummy_input/`:
-
-- `weather_station.csv` (hourly data for 10 days)
-- `sensor_north.csv`, `sensor_south.csv`, `sensor_east.csv`, `sensor_west.csv` (5-minute data for 10 days)
-
-## Generate Plotly assets locally
-
-Activate the environment and run the generator:
-
-```bash
-conda activate webpage
-python scripts/generate_plotly_assets.py
-```
-
-Then open `/tmp/workspace/maxnutz/sff_city_temperatures/docs/index.html` in a browser.
-
-## Run backend tests
-
-```bash
-python -m unittest discover -s tests -q
-```
+- function `plot_weather_station_time_series` _does not work yet_ 
 
 ## Run Flask scaffold locally
 
@@ -75,5 +58,8 @@ Activate the environment and start the app:
 conda activate webpage
 python app.py
 ```
+
+> [!NOTE]
+> The app does not run the evluations, if they are not available yet. Therefore, run the python-code by hand! 
 
 Open `http://localhost:8000/` to view the initial four-panel layout.

@@ -102,19 +102,6 @@ class Sensor:
         return figure
 
 
-def plot_sensor_time_series(
-    csv_path: str | Path,
-    sensor_name: str,
-    output_html_path: str | Path | None = None,
-) -> go.Figure:
-    timestamps, temperatures = _load_temperature_csv(csv_path)
-    figure = go.Figure()
-    figure.add_trace(go.Scatter(x=timestamps, y=temperatures, mode='lines', name=sensor_name))
-    figure.update_layout(title=f'{sensor_name} time series', xaxis_title='Time', yaxis_title='Temperature (°C)')
-    _write_plot(figure, output_html_path)
-    return figure
-
-
 def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
     if output_html_path is None:
         return
@@ -148,24 +135,28 @@ def plot_sensor_max_temperature_map(
             continue
 
         sensor_names.append(sensor_name)
-        lats.append(locations[sensor_name]['lat'])
-        lons.append(locations[sensor_name]['lon'])
+        lats.append(locations[sensor_name]["lat"])
+        lons.append(locations[sensor_name]["lon"])
         max_temperatures.append(max(daily_values))
 
     figure = go.Figure(
         go.Scattermapbox(
             lat=lats,
             lon=lons,
-            mode='markers+text',
+            mode="markers+text",
             text=sensor_names,
-            textposition='top center',
-            marker=dict(size=14, color=max_temperatures, colorscale='Viridis', showscale=True),
-            name='Max sensor temperature',
+            textposition="top center",
+            marker=dict(
+                size=14, color=max_temperatures, colorscale="Viridis", showscale=True
+            ),
+            name="Max sensor temperature",
         )
     )
     figure.update_layout(
-        title=f'Maximum sensor temperatures on {day}',
-        mapbox=dict(style='open-street-map', center=dict(lat=48.205, lon=16.38), zoom=11),
+        title=f"Maximum sensor temperatures on {day}",
+        mapbox=dict(
+            style="open-street-map", center=dict(lat=48.205, lon=16.38), zoom=11
+        ),
         margin=dict(l=20, r=20, t=50, b=20),
     )
     _write_plot(figure, output_html_path)
@@ -265,8 +256,8 @@ def main():
     all_sensors: list[Sensor] = [Sensor(name) for name in SENSOR_LOCATIONS.keys()]
 
     # create one plot per location
-    # for sensor in all_sensors:
-    #    sensor.plot_time_series()
+    for sensor in all_sensors:
+        sensor.plot_time_series()
 
     # create one plot with all locations
     plot_one_day_for_all_locations(all_sensors)
