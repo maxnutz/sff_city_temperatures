@@ -48,22 +48,7 @@ folder `backend` holds the python code for data evaluation
 - function `plot_sensor_max_temperature_map`: _does not work yet_ &rarr; output will be `docs/plots/map.html`
 - function `plot_one_day_for_all_locations`: Creates a figure over one day including the daily lines for all locations &rarr; output is `docs/plots/combined.html`
 
-## Generate Plotly assets locally
-
-Activate the environment and run the generator:
-
-```bash
-conda activate webpage
-python scripts/generate_plotly_assets.py
-```
-
-Then open `/tmp/workspace/maxnutz/sff_city_temperatures/docs/index.html` in a browser.
-
-## Run backend tests
-
-```bash
-python -m unittest discover -s tests -q
-```
+- function `plot_weather_station_time_series` _does not work yet_ 
 
 ## Run Flask scaffold locally
 
@@ -73,5 +58,8 @@ Activate the environment and start the app:
 conda activate webpage
 python app.py
 ```
+
+> [!NOTE]
+> The app does not run the evluations, if they are not available yet. Therefore, run the python-code by hand! 
 
 Open `http://localhost:8000/` to view the initial four-panel layout.
