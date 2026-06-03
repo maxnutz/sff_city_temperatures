@@ -102,6 +102,15 @@ class Sensor:
         return figure
 
 
+def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
+    if output_html_path is None:
+        return
+
+    output_path = Path(output_html_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure.write_html(output_path, include_plotlyjs="cdn", full_html=True)
+
+
 def plot_sensor_max_temperature_map(
     sensor_files: dict[str, str | Path],
     day: str,
