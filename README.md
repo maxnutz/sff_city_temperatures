@@ -42,7 +42,7 @@ folder `backend` holds the python code for data evaluation
 ### Code Structure:
 - main Class `Sensor`: 
   - init: Sensors are differentiated by their name. All names are in the dict `SENSOR_LOCATIONS`
-  - :param: df: holds the 5-min - Dataseries of the sensor
+  - :param: df: holds the 5-minute data series of the sensor
   - :param: df_max: holds the maximum temperature per day of the sensor
   - :method: plot_time_series: Plots one line per day from 00h to 24h of self.df-Timeseries of this sensor. &rarr; output in `docs/plots/{bankomat,baum,cafe,telefonzelle}_time_series.html` to be integrated on the "Four Temperature Time Series" - site
 - function `plot_sensor_max_temperature_map`: _does not work yet_ &rarr; output will be `docs/plots/map.html`
