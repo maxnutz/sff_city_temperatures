@@ -163,12 +163,15 @@ def plot_sensor_max_temperature_map(
     return figure
 
 
-def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
+def plot_one_day_for_all_locations(
+    all_locations: list[Sensor], days: list[pd.datetime] = [], day_name: str = None
+) -> go.Figure:
     """
     all_locations: list[Sensor]: list of the objects of class Sensor.
         self.df is the timeseries to be used.
         self.name is the name to be used.
-
+        days: _optional_ list of days to plot. If empty, all days in the timeseries will be plotted.
+        day_name: _optional_ name to be included in the title of the plot and the outputfile.
         Creates a figure over one day including the daily lines for all locations
     """
     figure = go.Figure()
@@ -180,6 +183,15 @@ def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
         "Bankomat": "#AB63FA",
     }
     line_styles = ["solid"]  # , "dash", "dot", "dashdot", "longdash", "longdashdot"]
+
+    # prepare allowed days set if days parameter is provided
+    allowed_days_set = None
+    days_labels: list[str] = []
+    if days:
+        # normalize input days to pandas Timestamp (date precision)
+        normalized = [pd.to_datetime(d).normalize() for d in days]
+        allowed_days_set = set(normalized)
+        days_labels = [d.date().isoformat() for d in normalized]
 
     for sensor in all_locations:
         if sensor.df.empty:
@@ -193,6 +205,13 @@ def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
             sensor.df.groupby(sensor.df.index.normalize())
         ):
             day_start = pd.Timestamp(day)
+            # if days provided, only include those dates
+            if (
+                allowed_days_set is not None
+                and day_start.normalize() not in allowed_days_set
+            ):
+                continue
+
             hours = (day_frame.index - day_start).total_seconds() / 3600
             day_label = day_start.date().isoformat()
             line_dash = line_styles[day_index % len(line_styles)]
@@ -222,15 +241,24 @@ def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
             sensor_traces_added = True
 
     figure.update_layout(
-        title="Combined time series for all locations",
-        xaxis_title="Time of day (hours)",
-        yaxis_title="Temperature (°C)",
+        title="Zeitreihen an " + day_name if day_name else "Zeitreihe aller Messpunkte",
+        xaxis_title="Tageszeit",
+        yaxis_title="Temperatur (°C)",
         xaxis=dict(range=[0, 24]),
         hovermode="x unified",
         legend=dict(groupclick="togglegroup"),
     )
 
-    output_path = Path("docs/plots") / "combined.html"
+    # build output filename: include evaluated days if provided
+    if days_labels:
+        # sort and deduplicate labels for filename
+        unique_sorted = sorted(dict.fromkeys(days_labels))
+        days_part = "_".join(unique_sorted)
+        output_filename = f"combined_{day_name.replace(' ', '_')}.html"
+    else:
+        output_filename = "combined.html"
+
+    output_path = Path("docs/plots") / output_filename
     _write_plot(figure, output_path)
     return figure
 
@@ -261,6 +289,33 @@ def main():
 
     # create one plot with all locations
     plot_one_day_for_all_locations(all_sensors)
+
+    # Tagesplots
+    days_to_plot = {
+        "Tagen unter 25 Grad": [
+            "2026-05-19",
+            "2026-05-20",
+            "2026-05-21",
+            "2026-05-22",
+            "2026-06-01",
+        ],
+        "Sommertagen (TX > 25 Grad)": [
+            "2026-05-23",
+            "2026-05-28",
+            "2026-05-29",
+            "2026-05-30",
+            "2026-05-31",
+            "2026-06-02",
+        ],
+        "Hitzetag (TX > 30 Grad)": [
+            "2026-05-24",
+            "2026-05-25",
+            "2026-05-26",
+            "2026-05-27",
+        ],
+    }
+    for day_name, days in days_to_plot.items():
+        plot_one_day_for_all_locations(all_sensors, days=days, day_name=day_name)
 
 
 if __name__ == "__main__":
