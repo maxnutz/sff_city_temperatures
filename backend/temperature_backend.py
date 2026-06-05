@@ -111,56 +111,55 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
     figure.write_html(output_path, include_plotlyjs="cdn", full_html=True)
 
 
+def _load_temperature_csv(csv_path: str | Path) -> tuple[pd.Series, pd.Series]:
+    inputfile = pd.read_csv(csv_path)
+    inputfile["timestamp"] = pd.to_datetime(inputfile["timestamp"], errors="coerce")
+    inputfile = inputfile[inputfile["timestamp"].notna()].sort_values("timestamp")
+    return inputfile["timestamp"], inputfile["temperature"]
+
+
 def plot_sensor_max_temperature_map(
-    sensor_files: dict[str, str | Path],
-    day: str,
-    output_html_path: str | Path | None = None,
-    sensor_locations: dict[str, dict[str, float]] | None = None,
+    all_locations: list[Sensor],
+    output_html_path: str | Path | None = Path("docs/plots/map.html"),
+    sensor_locations: dict[str, dict[str, float]] = SENSOR_LOCATIONS,
 ) -> go.Figure:
-    locations = sensor_locations or SENSOR_LOCATIONS
 
-    sensor_names: list[str] = []
-    lats: list[float] = []
-    lons: list[float] = []
-    max_temperatures: list[float] = []
+    df = pd.DataFrame(sensor_locations).T
 
-    for sensor_name, csv_path in sensor_files.items():
-        timestamps, temperatures = _load_temperature_csv(csv_path)
-        daily_values = [
-            temperature
-            for timestamp, temperature in zip(timestamps, temperatures)
-            if timestamp.date().isoformat() == day
-        ]
-        if not daily_values or sensor_name not in locations:
-            continue
+    sensor_colors = {
+        "Baum": "#636EFA",
+        "Cafe": "#EF553B",
+        "Telefonzelle": "#00CC96",
+        "Bankomat": "#AB63FA",
+    }
 
-        sensor_names.append(sensor_name)
-        lats.append(locations[sensor_name]["lat"])
-        lons.append(locations[sensor_name]["lon"])
-        max_temperatures.append(max(daily_values))
+    df["color"] = df.index.to_series().map(sensor_colors)
 
-    figure = go.Figure(
+    fig = go.Figure(
         go.Scattermapbox(
-            lat=lats,
-            lon=lons,
-            mode="markers+text",
-            text=sensor_names,
-            textposition="top center",
-            marker=dict(
-                size=14, color=max_temperatures, colorscale="Viridis", showscale=True
-            ),
-            name="Max sensor temperature",
+            lon=df["lon"],
+            lat=df["lat"],
+            mode="markers",
+            text=df.index,
+            marker=dict(size=16, color=df["color"]),
         )
     )
-    figure.update_layout(
-        title=f"Maximum sensor temperatures on {day}",
+
+    fig.update_layout(
         mapbox=dict(
-            style="open-street-map", center=dict(lat=48.205, lon=16.38), zoom=11
+            style="open-street-map",
+            zoom=16,  # adjust depending on your area
+            center=dict(
+                lat=df["lat"].mean(),
+                lon=df["lon"].mean(),
+            ),
         ),
-        margin=dict(l=20, r=20, t=50, b=20),
+        title="Sensor locations",
+        margin=dict(l=0, r=0, t=40, b=0),
     )
-    _write_plot(figure, output_html_path)
-    return figure
+
+    _write_plot(fig, output_html_path)
+    return fig
 
 
 def plot_one_day_for_all_locations(
@@ -282,6 +281,9 @@ def plot_weather_station_time_series(
 
 def main():
     all_sensors: list[Sensor] = [Sensor(name) for name in SENSOR_LOCATIONS.keys()]
+
+    # create the sensor-location map
+    plot_sensor_max_temperature_map(all_sensors)
 
     # create one plot per location
     for sensor in all_sensors:
