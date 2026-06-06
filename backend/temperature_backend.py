@@ -111,56 +111,54 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
     figure.write_html(output_path, include_plotlyjs="cdn", full_html=True)
 
 
-def plot_sensor_max_temperature_map(
-    sensor_files: dict[str, str | Path],
-    day: str,
-    output_html_path: str | Path | None = None,
-    sensor_locations: dict[str, dict[str, float]] | None = None,
+def plot_sensor_map(
+    output_html_path: str | Path | None = Path("docs/plots/map.html"),
+    sensor_locations: dict[str, dict[str, float]] = SENSOR_LOCATIONS,
 ) -> go.Figure:
-    locations = sensor_locations or SENSOR_LOCATIONS
+    """
+    Creates a map with the locations of the sensors.
+    The map is centered around the average location of the sensors.
+    output_html_path: str | Path | None: path to save the html file of the plot.
+    If None, the plot will not be saved to docs/plots/map.html.
+    """
+    df = pd.DataFrame(sensor_locations).T
 
-    sensor_names: list[str] = []
-    lats: list[float] = []
-    lons: list[float] = []
-    max_temperatures: list[float] = []
+    sensor_colors = {
+        "Baum": "#636EFA",
+        "Cafe": "#EF553B",
+        "Telefonzelle": "#00CC96",
+        "Bankomat": "#AB63FA",
+    }
 
-    for sensor_name, csv_path in sensor_files.items():
-        timestamps, temperatures = _load_temperature_csv(csv_path)
-        daily_values = [
-            temperature
-            for timestamp, temperature in zip(timestamps, temperatures)
-            if timestamp.date().isoformat() == day
-        ]
-        if not daily_values or sensor_name not in locations:
-            continue
+    df["color"] = df.index.to_series().map(sensor_colors)
 
-        sensor_names.append(sensor_name)
-        lats.append(locations[sensor_name]["lat"])
-        lons.append(locations[sensor_name]["lon"])
-        max_temperatures.append(max(daily_values))
-
-    figure = go.Figure(
+    fig = go.Figure(
         go.Scattermapbox(
-            lat=lats,
-            lon=lons,
+            lon=df["lon"],
+            lat=df["lat"],
             mode="markers+text",
-            text=sensor_names,
-            textposition="top center",
-            marker=dict(
-                size=14, color=max_temperatures, colorscale="Viridis", showscale=True
-            ),
-            name="Max sensor temperature",
+            text=df.index,
+            textposition="top right",
+            textfont=dict(size=12, color="black"),
+            marker=dict(size=16, color=df["color"]),
         )
     )
-    figure.update_layout(
-        title=f"Maximum sensor temperatures on {day}",
+
+    fig.update_layout(
         mapbox=dict(
-            style="open-street-map", center=dict(lat=48.205, lon=16.38), zoom=11
+            style="open-street-map",
+            zoom=18,  # adjust depending on your area
+            center=dict(
+                lat=df["lat"].mean(),
+                lon=df["lon"].mean(),
+            ),
         ),
-        margin=dict(l=20, r=20, t=50, b=20),
+        title="Sensor locations",
+        margin=dict(l=0, r=0, t=40, b=0),
     )
-    _write_plot(figure, output_html_path)
-    return figure
+
+    _write_plot(fig, output_html_path)
+    return fig
 
 
 def plot_one_day_for_all_locations(
@@ -263,25 +261,11 @@ def plot_one_day_for_all_locations(
     return figure
 
 
-def plot_weather_station_time_series(
-    csv_path: str | Path, output_html_path: str | Path | None = None
-) -> go.Figure:
-    timestamps, temperatures = _load_temperature_csv(csv_path)
-    figure = go.Figure()
-    figure.add_trace(
-        go.Scatter(x=timestamps, y=temperatures, mode="lines", name="Weather station")
-    )
-    figure.update_layout(
-        title="Weather station time series",
-        xaxis_title="Time",
-        yaxis_title="Temperature (°C)",
-    )
-    _write_plot(figure, output_html_path)
-    return figure
-
-
 def main():
     all_sensors: list[Sensor] = [Sensor(name) for name in SENSOR_LOCATIONS.keys()]
+
+    # create the sensor-location map
+    plot_sensor_map()
 
     # create one plot per location
     for sensor in all_sensors:
