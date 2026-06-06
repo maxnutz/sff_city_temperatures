@@ -108,7 +108,19 @@ header a {
 
 iframe {
   width: 100%;
-  min-height: 280px;
+  min-height: 650px;
+  height: 70vh;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
+}
+
+#combined-timeseries-panel iframe,
+#map-panel iframe {
+  min-height: 720px;
+  height: 75vh;
+}
+
+#four-timeseries-panel iframe {
+  min-height: 420px;
+  height: 48vh;
 }

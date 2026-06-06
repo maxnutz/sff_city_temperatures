@@ -20,6 +20,26 @@ The home page links to one static page per dashboard element:
 - `docs/static-information.html`
 - `docs/map-scatter.html`
 
+### Desired Website-structure
+#### Zeitreihen der Messpunkte (`four-timeseries.html`)
+- baum_time_series.html
+- cafe_time_series.html
+- telefonzelle_time_series.html
+- bankomat_time_series.html
+
+#### Vergleich der Messpunkte (`combined-timeseries.html`)
+- combined.hmtl
+- combined_Tagen_unter_25_Grad.html
+- combined_Sommertagen_(TX_>_25_Grad).html
+- combined_Hitzetag_(TX_>_30_Grad).html
+
+#### Informationen (`static-information.html`)
+- kein Plot, statischer Text 
+
+#### Karte der Messpunkte (`map-scatter.html`)
+- map.html
+
+
 ## Setup (Conda — recommended)
 
 Create and activate the `webpage` Conda environment (recommended):

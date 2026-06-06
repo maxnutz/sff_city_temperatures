@@ -119,7 +119,8 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
 
     output_path = Path(output_html_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    figure.write_html(output_path, include_plotlyjs="cdn", full_html=True)
+
+    figure.write_html(output_path, include_plotlyjs="cdn", full_html=True, default_width="100%",default_height="650px")
     
     ### replace in html to make the figure clickable with a href
     with open(output_path, 'r') as file:
@@ -134,64 +135,65 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
     with open(output_path, 'w') as file:
         file.write(data)
 
-def plot_sensor_max_temperature_map(
-    sensor_files: dict[str, str | Path],
-    day: str,
-    output_html_path: str | Path | None = None,
-    sensor_locations: dict[str, dict[str, float]] | None = None,
+def plot_sensor_map(
+    output_html_path: str | Path | None = Path("docs/plots/map.html"),
+    sensor_locations: dict[str, dict[str, float]] = SENSOR_LOCATIONS,
 ) -> go.Figure:
-    locations = sensor_locations or SENSOR_LOCATIONS
+    """
+    Creates a map with the locations of the sensors.
+    The map is centered around the average location of the sensors.
+    output_html_path: str | Path | None: path to save the html file of the plot.
+    If None, the plot will not be saved to docs/plots/map.html.
+    """
+    df = pd.DataFrame(sensor_locations).T
 
-    sensor_names: list[str] = []
-    lats: list[float] = []
-    lons: list[float] = []
-    max_temperatures: list[float] = []
+    sensor_colors = {
+        "Baum": "#636EFA",
+        "Cafe": "#EF553B",
+        "Telefonzelle": "#00CC96",
+        "Bankomat": "#AB63FA",
+    }
 
-    for sensor_name, csv_path in sensor_files.items():
-        timestamps, temperatures = _load_temperature_csv(csv_path)
-        daily_values = [
-            temperature
-            for timestamp, temperature in zip(timestamps, temperatures)
-            if timestamp.date().isoformat() == day
-        ]
-        if not daily_values or sensor_name not in locations:
-            continue
+    df["color"] = df.index.to_series().map(sensor_colors)
 
-        sensor_names.append(sensor_name)
-        lats.append(locations[sensor_name]["lat"])
-        lons.append(locations[sensor_name]["lon"])
-        max_temperatures.append(max(daily_values))
-
-    figure = go.Figure(
+    fig = go.Figure(
         go.Scattermapbox(
-            lat=lats,
-            lon=lons,
+            lon=df["lon"],
+            lat=df["lat"],
             mode="markers+text",
-            text=sensor_names,
-            textposition="top center",
-            marker=dict(
-                size=14, color=max_temperatures, colorscale="Viridis", showscale=True
-            ),
-            name="Max sensor temperature",
+            text=df.index,
+            textposition="top right",
+            textfont=dict(size=12, color="black"),
+            marker=dict(size=16, color=df["color"]),
         )
     )
-    figure.update_layout(
-        title=f"Maximum sensor temperatures on {day}",
+
+    fig.update_layout(
         mapbox=dict(
-            style="open-street-map", center=dict(lat=48.205, lon=16.38), zoom=11
+            style="open-street-map",
+            zoom=18,  # adjust depending on your area
+            center=dict(
+                lat=df["lat"].mean(),
+                lon=df["lon"].mean(),
+            ),
         ),
-        margin=dict(l=20, r=20, t=50, b=20),
+        title="Sensor locations",
+        margin=dict(l=0, r=0, t=40, b=0),
     )
-    _write_plot(figure, output_html_path)
-    return figure
+
+    _write_plot(fig, output_html_path)
+    return fig
 
 
-def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
+def plot_one_day_for_all_locations(
+    all_locations: list[Sensor], days: list[pd.datetime] = [], day_name: str = None
+) -> go.Figure:
     """
     all_locations: list[Sensor]: list of the objects of class Sensor.
         self.df is the timeseries to be used.
         self.name is the name to be used.
-
+        days: _optional_ list of days to plot. If empty, all days in the timeseries will be plotted.
+        day_name: _optional_ name to be included in the title of the plot and the outputfile.
         Creates a figure over one day including the daily lines for all locations
     """
     figure = go.Figure()
@@ -203,6 +205,15 @@ def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
         "Bankomat": "#AB63FA",
     }
     line_styles = ["solid"]  # , "dash", "dot", "dashdot", "longdash", "longdashdot"]
+
+    # prepare allowed days set if days parameter is provided
+    allowed_days_set = None
+    days_labels: list[str] = []
+    if days:
+        # normalize input days to pandas Timestamp (date precision)
+        normalized = [pd.to_datetime(d).normalize() for d in days]
+        allowed_days_set = set(normalized)
+        days_labels = [d.date().isoformat() for d in normalized]
 
     for sensor in all_locations:
         if sensor.df.empty:
@@ -216,6 +227,13 @@ def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
             sensor.df.groupby(sensor.df.index.normalize())
         ):
             day_start = pd.Timestamp(day)
+            # if days provided, only include those dates
+            if (
+                allowed_days_set is not None
+                and day_start.normalize() not in allowed_days_set
+            ):
+                continue
+
             hours = (day_frame.index - day_start).total_seconds() / 3600
             day_label = day_start.date().isoformat()
             line_dash = line_styles[day_index % len(line_styles)]
@@ -245,38 +263,33 @@ def plot_one_day_for_all_locations(all_locations: list[Sensor]) -> go.Figure:
             sensor_traces_added = True
 
     figure.update_layout(
-        title="Combined time series for all locations",
-        xaxis_title="Time of day (hours)",
-        yaxis_title="Temperature (°C)",
+        title="Zeitreihen an " + day_name if day_name else "Zeitreihe aller Messpunkte",
+        xaxis_title="Tageszeit",
+        yaxis_title="Temperatur (°C)",
         xaxis=dict(range=[0, 24]),
         hovermode="x unified",
         legend=dict(groupclick="togglegroup"),
     )
 
-    output_path = Path("docs/plots") / "combined.html"
+    # build output filename: include evaluated days if provided
+    if days_labels:
+        # sort and deduplicate labels for filename
+        unique_sorted = sorted(dict.fromkeys(days_labels))
+        days_part = "_".join(unique_sorted)
+        output_filename = f"combined_{day_name.replace(' ', '_')}.html"
+    else:
+        output_filename = "combined.html"
+
+    output_path = Path("docs/plots") / output_filename
     _write_plot(figure, output_path)
-    return figure
-
-
-def plot_weather_station_time_series(
-    csv_path: str | Path, output_html_path: str | Path | None = None
-) -> go.Figure:
-    timestamps, temperatures = _load_temperature_csv(csv_path)
-    figure = go.Figure()
-    figure.add_trace(
-        go.Scatter(x=timestamps, y=temperatures, mode="lines", name="Weather station")
-    )
-    figure.update_layout(
-        title="Weather station time series",
-        xaxis_title="Time",
-        yaxis_title="Temperature (°C)",
-    )
-    _write_plot(figure, output_html_path)
     return figure
 
 
 def main():
     all_sensors: list[Sensor] = [Sensor(name) for name in SENSOR_LOCATIONS.keys()]
+
+    # create the sensor-location map
+    plot_sensor_map()
 
     # create one plot per location
     for sensor in all_sensors:
@@ -284,6 +297,33 @@ def main():
 
     # create one plot with all locations
     plot_one_day_for_all_locations(all_sensors)
+
+    # Tagesplots
+    days_to_plot = {
+        "Tagen unter 25 Grad": [
+            "2026-05-19",
+            "2026-05-20",
+            "2026-05-21",
+            "2026-05-22",
+            "2026-06-01",
+        ],
+        "Sommertagen (TX > 25 Grad)": [
+            "2026-05-23",
+            "2026-05-28",
+            "2026-05-29",
+            "2026-05-30",
+            "2026-05-31",
+            "2026-06-02",
+        ],
+        "Hitzetag (TX > 30 Grad)": [
+            "2026-05-24",
+            "2026-05-25",
+            "2026-05-26",
+            "2026-05-27",
+        ],
+    }
+    for day_name, days in days_to_plot.items():
+        plot_one_day_for_all_locations(all_sensors, days=days, day_name=day_name)
 
 
 if __name__ == "__main__":
