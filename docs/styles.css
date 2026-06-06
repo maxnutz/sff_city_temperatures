@@ -47,7 +47,14 @@ header a {
 
 .grid-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 40% 40% 20%;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.grid-layout-static {
+  display: grid;
+  grid-template-rows: 1fr auto;
   gap: 1rem;
   padding: 1rem;
 }
