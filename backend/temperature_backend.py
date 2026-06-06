@@ -89,7 +89,18 @@ class Sensor:
                 )
             )
 
+        # place legends inside plot
         figure.update_layout(
+            legend=dict(
+                x = 0.1,
+                y = .9,
+                traceorder="normal",
+                font=dict(
+                    family="sans-serif",
+                    size=10,
+                    color="black"
+                ),
+            ),
             title=f"{self.name} time series",
             xaxis_title="Time of day (hours)",
             yaxis_title="Temperature (°C)",
@@ -108,14 +119,21 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
 
     output_path = Path(output_html_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    figure.write_html(
-        output_path,
-        include_plotlyjs="cdn",
-        full_html=True,
-        default_width="100%",
-        default_height="650px",
-    )
 
+    figure.write_html(output_path, include_plotlyjs="cdn", full_html=True, default_width="100%",default_height="650px")
+    
+    ### replace in html to make the figure clickable with a href
+    with open(output_path, 'r') as file:
+        data = file.read()
+        pattern = r'getElementById\("([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})"\)'
+        match = re.search(pattern, data)
+        href_text = "./../four-timeseries.html"
+        search_text = "});\n\t\t</script>"
+        replace_text = "document.getElementById('" + match.group(1) + "').addEventListener('click', function() {\n\t\t\t\twindow.open('" + href_text + "', '_blank');\n\t\t\t});\n\tt</script>\n
+        data = data.replace(search_text, replace_text)
+
+    with open(output_path, 'w') as file:
+        file.write(data)
 
 def plot_sensor_map(
     output_html_path: str | Path | None = Path("docs/plots/map.html"),
