@@ -111,19 +111,16 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
     figure.write_html(output_path, include_plotlyjs="cdn", full_html=True)
 
 
-def _load_temperature_csv(csv_path: str | Path) -> tuple[pd.Series, pd.Series]:
-    inputfile = pd.read_csv(csv_path)
-    inputfile["timestamp"] = pd.to_datetime(inputfile["timestamp"], errors="coerce")
-    inputfile = inputfile[inputfile["timestamp"].notna()].sort_values("timestamp")
-    return inputfile["timestamp"], inputfile["temperature"]
-
-
-def plot_sensor_max_temperature_map(
-    all_locations: list[Sensor],
+def plot_sensor_map(
     output_html_path: str | Path | None = Path("docs/plots/map.html"),
     sensor_locations: dict[str, dict[str, float]] = SENSOR_LOCATIONS,
 ) -> go.Figure:
-
+    """
+    Creates a map with the locations of the sensors.
+    The map is centered around the average location of the sensors.
+    output_html_path: str | Path | None: path to save the html file of the plot.
+    If None, the plot will not be saved to docs/plots/map.html.
+    """
     df = pd.DataFrame(sensor_locations).T
 
     sensor_colors = {
@@ -264,28 +261,11 @@ def plot_one_day_for_all_locations(
     return figure
 
 
-def plot_weather_station_time_series(
-    csv_path: str | Path, output_html_path: str | Path | None = None
-) -> go.Figure:
-    timestamps, temperatures = _load_temperature_csv(csv_path)
-    figure = go.Figure()
-    figure.add_trace(
-        go.Scatter(x=timestamps, y=temperatures, mode="lines", name="Weather station")
-    )
-    figure.update_layout(
-        title="Weather station time series",
-        xaxis_title="Time",
-        yaxis_title="Temperature (°C)",
-    )
-    _write_plot(figure, output_html_path)
-    return figure
-
-
 def main():
     all_sensors: list[Sensor] = [Sensor(name) for name in SENSOR_LOCATIONS.keys()]
 
     # create the sensor-location map
-    plot_sensor_max_temperature_map(all_sensors)
+    plot_sensor_map()
 
     # create one plot per location
     for sensor in all_sensors:
