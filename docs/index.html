@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="referrer" content="origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>City Temperatures</title>
     <link rel="stylesheet" href="./styles.css" />
@@ -18,7 +19,8 @@
         <a href="./index.html">Home</a>
         <a href="./four-timeseries.html">Four Temperature Time Series</a>
         <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
-        <a href="./static-information.html">Static Information</a>
+        <a href="./combined-heat-class.html">Comparison Heat Days</a>
+        <a href="./static-information.html">Project Information</a>
         <a href="./map-scatter.html">Map with Scatter Plot</a>
       </nav>
     </header>
@@ -38,13 +40,14 @@
 	  <a class="site-card-link" href="./combined-timeseries.html">
       <section class="panel" id="combined-timeseries-panel">
         <h2>Combined Temperature Time Series</h2>
-        <iframe title="Combined temperatures" src="./plots/combined.html" loading="lazy" href="./combined-timeseries.html"></iframe>
+        <iframe title="All places" src="./plots/combined.html" loading="lazy" href="./combined-timeseries.html"></iframe>
+        <iframe title="Days of different temperatures" src="./plots/combined_Tagen_unter_25_Grad.html" loading="lazy" href="./combined-heat-class.html"></iframe>
       </section>
       </a>
 
       <section class="panel" id="home-panel">
-        <h2>Home / Static Information</h2>
-        <p>Open one dedicated site per dashboard element:</p>
+        <h2>Temperature Dashboard</h2>
+        <p>The City Temperature Dashboard is a project of <a href="https://www.scientists4future.at/">Scientists for Future Austria</a>.</p>
         <div class="grid-layout-static">
 <!--
           <a class="site-card-link" href="./four-timeseries.html">
@@ -62,14 +65,19 @@
 -->
           <a class="site-card-link" href="./static-information.html">
             <section class="panel">
-              <h2>Home / Static Information</h2>
-              <p>Placeholder area for static project information.</p>
+              <h2>Takehome Messages</h2>
+              <ul>
+				  <li>Exposition to <b>heat is a significant threat</b> to public health, especially in urban areas.</li>
+				  <li>We measured the temperature at different locations on Siebenbrunnenplatz Vienna.</li>
+				  <li><b>Heat islands</b> can be <b>very local</b> even on the scale of 10 m</li>
+				  <li>The results of this project demonstrate that <b>even small adaptation measures</b>, such as a single tree, can <b>make a big difference</b>.</li>
+              </ul>
             </section>
           </a>
           <a class="site-card-link" href="./map-scatter.html">
             <section class="panel">
-              <h2>Map with Scatter Plot</h2>
-              <p>Placeholder area for an interactive map with scattered points.</p>
+              <h2>Location</h2>
+              <iframe src="./plots/map.html" loading="lazy" href="./plots/map.html" rel="strict-origin"></iframe>
             </section>
           </a>
         </div>

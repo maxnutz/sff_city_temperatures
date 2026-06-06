@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Days of different overall temperature</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Days of different overall temperature</h1>
+      <p><a href="./index.html">Back to Home</a></p>
+      <nav class="site-nav" aria-label="Site navigation">
+        <a href="./index.html">Home</a>
+        <a href="./four-timeseries.html">Four Temperature Time Series</a>
+        <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
+        <a href="./combined-heat-class.html">Comparison Heat Days</a>
+        <a href="./static-information.html">Project Information</a>
+        <a href="./map-scatter.html">Map with Scatter Plot</a>
+      </nav>
+    </header>
+
+    <main class="page-layout">
+	  <p>Heat islands cause higher temperatures on all days. Even on cool days with temperatures below 25°C, these locations generate temperatures above 35°C, 10°C above the average.<br>
+	  On hot (heat) days with temperatures >30°C in the shade, the difference is even higher. Heat islands can reach temperatures 20°C above the ambient one.</p>
+	  <p>Below, the three graphs show the comparison of the temperatures in the shade (Baum), a coffee place (Cafe), near a telephone booth (Telefonzelle) and a cash dispenser (Bankomat) for days of different heat classes. Temperatures at the booth and cash dispenser above asphalt and exposed to the sun are significantly higher than in the shade for all days.</p>
+      <div class="grid-layout-equal"></div>
+        <iframe title="Days <20°C" src="./plots/combined_Tagen_unter_25_Grad.html" loading="lazy"></iframe>
+        <iframe title="Summer days (>25°C)</iframe>" src="./plots/combined_Sommertagen_(TX_>_25_Grad).html" loading="lazy"></iframe>
+        <iframe title="Heat days (>30°C)</iframe>" src="./plots/combined_Hitzetag_(TX_>_30_Grad).html" loading="lazy"></iframe>
+      </div>
+    </main>
+  </body>
+</html>

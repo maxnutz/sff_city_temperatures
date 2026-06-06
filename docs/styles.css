@@ -59,6 +59,13 @@ header a {
   padding: 1rem;
 }
 
+.grid-layout-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
 .page-layout {
   padding: 1rem;
 }
