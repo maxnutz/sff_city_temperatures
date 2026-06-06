@@ -139,8 +139,10 @@ def plot_sensor_max_temperature_map(
         go.Scattermapbox(
             lon=df["lon"],
             lat=df["lat"],
-            mode="markers",
+            mode="markers+text",
             text=df.index,
+            textposition="top right",
+            textfont=dict(size=12, color="black"),
             marker=dict(size=16, color=df["color"]),
         )
     )
@@ -148,7 +150,7 @@ def plot_sensor_max_temperature_map(
     fig.update_layout(
         mapbox=dict(
             style="open-street-map",
-            zoom=16,  # adjust depending on your area
+            zoom=18,  # adjust depending on your area
             center=dict(
                 lat=df["lat"].mean(),
                 lon=df["lon"].mean(),
