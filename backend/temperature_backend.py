@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Iterable
 import pandas as pd
+import re
 
 import plotly.graph_objects as go
 
@@ -129,7 +130,13 @@ def _write_plot(figure: go.Figure, output_html_path: str | Path | None) -> None:
         match = re.search(pattern, data)
         href_text = "./../four-timeseries.html"
         search_text = "});\n\t\t</script>"
-        replace_text = "document.getElementById('" + match.group(1) + "').addEventListener('click', function() {\n\t\t\t\twindow.open('" + href_text + "', '_blank');\n\t\t\t});\n\tt</script>\n
+        replace_text = (
+            "document.getElementById('"
+            + match.group(1)
+            + "').addEventListener('click', function() {\n\t\t\t\twindow.open('"
+            + href_text
+            + "', '_blank');\n\t\t\t});\n\t\t</script>\n"
+        )
         data = data.replace(search_text, replace_text)
 
     with open(output_path, 'w') as file:
