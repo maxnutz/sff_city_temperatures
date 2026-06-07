@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home / Static Information</title>
+    <title>Projektinformation</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -12,34 +12,57 @@
       <p><a href="./index.html">Back to Home</a></p>
       <nav class="site-nav" aria-label="Site navigation">
         <a href="./index.html">Home</a>
-        <a href="./four-timeseries.html">Four Temperature Time Series</a>
-        <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
-        <a href="./combined-heat-class.html">Comparison Heat Days</a>
-        <a href="./static-information.html">Project Information</a>
-        <a href="./map-scatter.html">Map with Scatter Plot</a>
+        <a href="./four-timeseries.html">Zeitreihen der einzelnen Messpunkte</a>
+        <a href="./combined-timeseries.html">Kombinierte Zeitreihe aller Messpunkte</a>
+        <a href="./combined-heat-class.html">Vergleich an Tagen unterschiedlicher Maximaltemperatur</a>
+        <a href="./static-information.html">Projektinformation</a>
+        <a href="./map-scatter.html">Karte mit Messpunkten</a>
       </nav>
     </header>
 
     <main class="page-layout">
       <section class="panel" id="static-info-panel">
-        <h1>Project Information</h1>
+        <h1>Take aways</h1>
         <p>
-          This project was initiated by Max Nutz in Spring 2026 to demonstrate ...
           <ul>
-			  <li>The locality of heat island effect</li>
-			  <li>The severity of heat islands on small scales</li>
-			  <li>The amplification of the heat island effect on hot days</li>
+            <li>Die Hitze-Exposition ist stark abhängig von der direkten Umgebung. Temperaturunterschiede können zu einem Zeitpunkt knapp 30 Grad betragen</li>
+            <li>Auch an kühlen Tagen (Maximaltemperatur der nächsten Messstation unter 25 Grad) weisen Teile des Siebenbrunnenplatzes Temperaturen über 35 Grad auf.</li>
+            <li>Besonders an generell heißen Tagen unterscheiden sich die Temperaturen an stärker hitzebelasteten Stellen und besser geschützten Stellen um über 20 Grad.</li>
+            <li>Die starken sehr lokalen Unterschiede zeigen, dass die Hitze-Exposition gut beeinflussbar ist, Hitzeinsel-Effekte durch geeignete Planung vermieden werden kann.</li>
+            <li>In der aktuell stark versiegelten östlichen Hälfte des Siebenbrunnenplatzes sind Menschen hohen Temperaturen ausgesetzt, wenn sie Infrastruktur vor Ort (wie Bankomat) nutzen müssen.</li>
+            <li>Das Risiko, das von hohen Temperaturen ausgeht ist stark beeinflussbar und aktuell durch schlechte Planung deutlich höher als notwendig.</li>
           </ul>
+		    </p>
+        <h1>Projektinformation</h1>
+        <p>
+          Dies ist ein Projekt der Scientists For Future Österreich zum Hitzeaktionstag 2026. Am Beispiel des
+          Siebenbrunnenplatz wird der Hitzeinsel-Effekt gezeigt. Die Ergebnisse der Messungen zeigen beispielhaft,
+          wie stark der Einfluss der unmittelbaren Umgebung und Verbauung auf die Hitzebelastung an einem Ort ist. 
         </p>
-        <h4>Methods:</h4>
-        <p>Temperature loggers have been placed at four locations on Siebenbrunnenplatz in Vienna. Data have been taken between TBD and TBD.
-        Note that while these loggers do not conform with the quality requirements of the World Meteorological Organization [TBD:Link?], the generated data still permits reliable conclusions.
+        <p>
+          Mit zunehmender Klimaerhitzung steigt weltweit und in Österreich die Durschnittstemperatur, was auch für 
+          Österreich unmittelbare Folgen auf das Auftreten und die Dauer von Hitzeereignissen hat. Wie gefährlich 
+          diese zunehmende Hitze für Menschen wird ist durch mehrere Parameter beeinflussbar. Mit diesem Projekt wird
+          gezeigt, wie die Exposition von lokalen Gegebenheiten abhängt.
         </p>
-        <h4>Locations:</h4>
-        <p>TBD: describe the different locations. Best with a photo!
-		</p>
-		<h4>Results:</h4>
-		<p>TBD: describe the most important results</p>
+        <h3>Messpunkte</h3>
+        <p>
+          Die Daten wurden an <a href="./map-scatter.html">4 Messpunkten am Siebenbrunnenplatz</a> in Wien gesammelt.
+          Dafür wurden Stellen ausgewählt, an denen sich Menschen aufhalten (eg. Café) bzw. aufhalten müssen (eg. Bankomat
+          und Telefonzelle, die sich direkt neben einer für Fußgeher:innen wichtigen Ampel befindet).
+          Es wurden dafür Temperature-Data-Logger verwendet und keine professionellen Sensor-Systeme.
+        </p>
+        <p><b>Die Auswahl der Messpunkte</b> an dem Ort ergab sich anhand der Relevanz dieser Orte für die Menschen, die 
+        die Plätze nutzen (müssen).
+        <ul>
+          <li><b>Baum:</b> Bepflanzte Umgbung mit vielen Sitzmöglichkeiten, die (auch im Sommer) oft genutzt werden.</li>
+          <li><b>Café:</b> Gastgarten eines Kaffeehauses, der mit Begrünung abgegrenzt ist und eine Beschattung hat.</li>
+          <li><b>Telefonzelle:</b> Auch wenn die Telefonzelle vermutlich keine hohe Relevanz mehr hat befindet sie sich direkt neben
+          einer häufig genutzten Ampel, an der es auch lange Wartezeiten gibt.</li>
+          <li><b>Bankomat:</b> Der Bankomat ist ein wichtiger Dienstleistungspunkt, der oft genutzt wird und liegt direkt am Gehtsteig
+          der Reinprechtsdorfer Straße.</li>
+        </ul>
+        </p>
       </section>
       
     </main>

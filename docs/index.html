@@ -9,79 +9,70 @@
   </head>
   <body>
     <header>
-      <h1>City Temperature Dashboard</h1>
-      <p>Initial frontend framework for future interactive temperature visualizations.</p>
+      <h1>Temperaturmessungen Siebenbrunnenplatz</h1>
+      <p>Ergebnis-Dashboard und Visualisierungen</p>
       <p>
-        Public URL:
+        URL:
         <a href="https://maxnutz.github.io/sff_city_temperatures/">https://maxnutz.github.io/sff_city_temperatures/</a>
       </p>
       <nav class="site-nav" aria-label="Site navigation">
         <a href="./index.html">Home</a>
-        <a href="./four-timeseries.html">Four Temperature Time Series</a>
-        <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
-        <a href="./combined-heat-class.html">Comparison Heat Days</a>
-        <a href="./static-information.html">Project Information</a>
-        <a href="./map-scatter.html">Map with Scatter Plot</a>
+        <a href="./four-timeseries.html">Zeitreihen der einzelnen Messpunkte</a>
+        <a href="./combined-timeseries.html">Kombinierte Zeitreihe aller Messpunkte</a>
+        <a href="./combined-heat-class.html">Vergleich an Tagen unterschiedlicher Maximaltemperatur</a>
+        <a href="./static-information.html">Projektinformation</a>
+        <a href="./map-scatter.html">Karte mit Messpunkten</a>
       </nav>
     </header>
 
     <main class="grid-layout">
-      <section class="panel" id="four-timeseries-panel">
-        <h2>Four Temperature Time Series</h2>
-        <div class="plot-grid">
-			<a class="site-card-link" href="./four-timeseries.html">
-				<iframe title="Baum temperatures" src="./plots/baum_time_series.html" loading="lazy" href="./four-timeseries.html"></iframe>
-			</a>
-          <iframe title="Cafe temperatures" src="./plots/cafe_time_series.html" loading="lazy" href="./four-timeseries.html"></iframe>
-          <iframe title="Telefonzelle temperatures" src="./plots/telefonzelle_time_series.html" loading="lazy" href="./four-timeseries.html"></iframe>
-          <iframe title="Bankomat temperatures" src="./plots/bankomat_time_series.html" loading="lazy" href="./four-timeseries.html"></iframe>
-        </div>
-      </section>
-	  <a class="site-card-link" href="./combined-timeseries.html">
-      <section class="panel" id="combined-timeseries-panel">
-        <h2>Combined Temperature Time Series</h2>
-        <iframe title="All places" src="./plots/combined.html" loading="lazy" href="./combined-timeseries.html"></iframe>
-        <iframe title="Days of different temperatures" src="./plots/combined_Tagen_unter_25_Grad.html" loading="lazy" href="./combined-heat-class.html"></iframe>
-      </section>
-      </a>
+
 
       <section class="panel" id="home-panel">
-        <h2>Temperature Dashboard</h2>
+        <h2>Projektionformationen</h2>
         <p>The City Temperature Dashboard is a project of <a href="https://www.scientists4future.at/">Scientists for Future Austria</a>.</p>
         <div class="grid-layout-static">
-<!--
-          <a class="site-card-link" href="./four-timeseries.html">
-            <section class="panel">
-              <h2>Four Temperature Time Series</h2>
-              <p>Placeholder area for showing one site with four temperature time series.</p>
-            </section>
-          </a>
-          <a class="site-card-link" href="./combined-timeseries.html">
-            <section class="panel">
-              <h2>Combined Temperature Time Series</h2>
-              <p>Placeholder area for one graph containing all four time series.</p>
-            </section>
-          </a>
--->
           <a class="site-card-link" href="./static-information.html">
             <section class="panel">
               <h2>Takehome Messages</h2>
               <ul>
-				  <li>Exposition to <b>heat is a significant threat</b> to public health, especially in urban areas.</li>
-				  <li>We measured the temperature at different locations on Siebenbrunnenplatz Vienna.</li>
-				  <li><b>Heat islands</b> can be <b>very local</b> even on the scale of 10 m</li>
-				  <li>The results of this project demonstrate that <b>even small adaptation measures</b>, such as a single tree, can <b>make a big difference</b>.</li>
+                <li>Die Exposition gegenüber <b>Hitze ist eine erhebliche Bedrohung</b> für die öffentliche Gesundheit, insbesondere in städtischen Gebieten.</li>
+                <li>Wir haben die Temperatur an verschiedenen Standorten am Siebenbrunnenplatz in Wien gemessen.</li>
+                <li><b>Hitzeinseln</b> können <b>sehr lokal</b> sein, sogar im Maßstab von 10 m.</li>
+                <li>Die Ergebnisse dieses Projekts zeigen, dass <b>selbst kleine Anpassungsmaßnahmen</b>, wie ein einzelner Baum, <b>einen großen Unterschied machen</b> können.</li>
               </ul>
-            </section>
-          </a>
-          <a class="site-card-link" href="./map-scatter.html">
-            <section class="panel">
-              <h2>Location</h2>
-              <iframe src="./plots/map.html" loading="lazy" href="./plots/map.html" rel="strict-origin"></iframe>
             </section>
           </a>
         </div>
       </section>
+
+
+    <a class="site-card-link" href="./four-timeseries.html">
+      <section class="panel" id="combined-timeseries-panel">
+        <h2>Zeitreihen der einzelnen Messpunkte</h2>
+        <p>An allen Orten sind Tage mit höheren und niedrigeren Temperaturen gemessen worden. Wo ist der Unterschied am größten?</p>
+      </section>
+      </a>
+	  <a class="site-card-link" href="./combined-timeseries.html">
+      <section class="panel" id="combined-timeseries-panel">
+        <h2>Kombinierte Zeitreihe aller Messpunkte</h2>
+        <p>Die Messpunkte zeigen systematisch unterschiedliche Tagesverläufe der Temperaturen. Welche Messpunkte sind heißere Standorte?</p>
+      </section>
+      </a>
+
+    <a class="site-card-link" href="./combined-heat-class.html">
+      <section class="panel" id="combined-timeseries-panel">
+        <h2>Vergleich an Tagen unterschiedlicher Maximaltemperaturen</h2>
+        <p>An Hitzetagen spürt man überall eine Belastung durch Temperatur. Wo ist es aber an Tagen, an denen eine Maximaltemperatur unter 25 °C angesagt ist, trotzdem heiß? </p>
+      </section>
+      </a>
+
+    <a class="site-card-link" href="./map-scatter.html">
+            <section class="panel">
+              <h2>Karte mit Messpunkten</h2>
+              <iframe src="./plots/map.html" loading="lazy" href="./plots/map.html" rel="strict-origin"></iframe>
+            </section>
+          </a>
     </main>
   </body>
 </html>

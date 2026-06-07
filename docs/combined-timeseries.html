@@ -8,17 +8,25 @@
   </head>
   <body>
     <header>
-      <h1>Combined Temperature Time Series</h1>
+      <h1>Kombinierte Zeitreihe aller Messpunkte</h1>
       <p><a href="./index.html">Back to Home</a></p>
       <nav class="site-nav" aria-label="Site navigation">
         <a href="./index.html">Home</a>
-        <a href="./four-timeseries.html">Four Temperature Time Series</a>
-        <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
-        <a href="./static-information.html">Static Information</a>
-        <a href="./map-scatter.html">Map with Scatter Plot</a>
+        <a href="./four-timeseries.html">Zeitreihen der einzelnen Messpunkte</a>
+        <a href="./combined-timeseries.html">Kombinierte Zeitreihe aller Messpunkte</a>
+        <a href="./combined-heat-class.html">Vergleich an Tagen unterschiedlicher Maximaltemperatur</a>
+        <a href="./static-information.html">Projektinformation</a>
+        <a href="./map-scatter.html">Karte mit Messpunkten</a>
       </nav>
     </header>
-
+    <p>
+      Die Messpunkte zeigen systematisch unterschiedliche Tagesverläufe der Temperatur, wobei die Nachtzeiten (ca. 19h - 07h) ein
+      deutlich einheitlicheres Bild zeigen, als die Tageszeiten.<p>
+    <p><b>Während alle Messpunkte in der Früh mit einer vergleichbaren Temperatur starten, steigen die Temperaturen an 
+      den Messpunkten "Telefonzelle" und "Bankomat" ab einem bestimmten Zeitpunkt rasant an. </b>Am Messpunkt "Telefonzelle"
+      findet der Anstieg früher statt. Kühlende Effekte in der unmittelbaren Umgebung fehlen an beiden Standorten.</p>
+    <p><b>Die Messpunkte "Baum" und "Café" zeigen einen deutlich stabileren Temperaturgang.</b> In der unmittelbaren Umgebung
+    gibt es stärkere Bepflanzung und Bäume, als auch einen Brunnen.</p>
     <main class="page-layout">
       <section class="panel" id="combined-timeseries-panel">
         <iframe title="Combined temperatures" src="./plots/combined.html" loading="lazy"></iframe>
