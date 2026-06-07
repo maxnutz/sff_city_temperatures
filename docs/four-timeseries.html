@@ -8,25 +8,32 @@
   </head>
   <body>
     <header>
-      <h1>Four Temperature Time Series</h1>
+      <h1>Zeitreihen der einzelnen Messpunkte</h1>
       <p><a href="./index.html">Back to Home</a></p>
       <nav class="site-nav" aria-label="Site navigation">
         <a href="./index.html">Home</a>
-        <a href="./four-timeseries.html">Four Temperature Time Series</a>
-        <a href="./combined-timeseries.html">Combined Temperature Time Series</a>
-        <a href="./combined-heat-class.html">Comparison Heat Days</a>
-        <a href="./static-information.html">Project Information</a>
-        <a href="./map-scatter.html">Map with Scatter Plot</a>
+        <a href="./four-timeseries.html">Zeitreihen der einzelnen Messpunkte</a>
+        <a href="./combined-timeseries.html">Kombinierte Zeitreihe aller Messpunkte</a>
+        <a href="./combined-heat-class.html">Vergleich an Tagen unterschiedlicher Maximaltemperatur</a>
+        <a href="./static-information.html">Projektinformation</a>
+        <a href="./map-scatter.html">Karte mit Messpunkten</a>
       </nav>
     </header>
 
     <main class="page-layout">
+      <p>An allen Orten sind Tage mit höheren und niedrigeren Temperaturen gemessen worden.</p>
+      <p><b>Der größte Unterschied zwischen einem Tag mit hoher Temperatur und einem Tag mit niedriger Temperatur ist am Messpunkt "Bankomat" zu 
+        beobachten.</b> Das Gebiet um diesen Messpunkt ist stark versiegelt und der Sonneneinstrahlung (im Mai besonders
+        am späten Nachmittag) stark ausgesetzt.</p>
+      <p><b>An den Messpunkten "Baum" und "Café" ist der Temperaturgang an den 
+        gemessenen Tagen deutlich stabiler.</b>
+      </p>
       <section class="panel" id="four-timeseries-panel">
-        <div class="plot-grid">
-          <iframe title="North temperatures" src="./plots/north.html" loading="lazy"></iframe>
-          <iframe title="South temperatures" src="./plots/south.html" loading="lazy"></iframe>
-          <iframe title="East temperatures" src="./plots/east.html" loading="lazy"></iframe>
-          <iframe title="West temperatures" src="./plots/west.html" loading="lazy"></iframe>
+        <div class="plot-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+          <iframe title="North temperatures" src="./plots/baum_time_series.html" loading="lazy"></iframe>
+          <iframe title="South temperatures" src="./plots/cafe_time_series.html" loading="lazy"></iframe>
+          <iframe title="East temperatures" src="./plots/telefonzelle_time_series.html" loading="lazy"></iframe>
+          <iframe title="West temperatures" src="./plots/bankomat_time_series.html" loading="lazy"></iframe>
         </div>
       </section>
     </main>
