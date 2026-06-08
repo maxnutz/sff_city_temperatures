@@ -47,9 +47,15 @@ header a {
 
 .grid-layout {
   display: grid;
-  grid-template-columns: 40% 40% 20%;
   gap: 1rem;
   padding: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .grid-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .grid-layout-static {
@@ -111,6 +117,25 @@ header a {
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.img-wrap {
+  width: 200px;
+  height: 150px;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+}
+
+div > img {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  transform: translate(-50%, -50%);
 }
 
 iframe {
